@@ -1,0 +1,2 @@
+#!/bin/bash
+/usr/src/tensorrt/bin/trtexec --onnx="./model/yolov11s_nx720x1280x3(384x640).onnx" --saveEngine="./model/yolov11s_nx720x1280x3(384x640).trt" --fp16 --plugins=build/libtrtrun_core.so --minShapes=input_img_uint8:1x720x1280x3 --optShapes=input_img_uint8:4x720x1280x3 --maxShapes=input_img_uint8:16x720x1280x3 --verbose --dumpLayerInfo --dumpProfile --separateProfileRun --profilingVerbosity=detailed > models/trt_build_f16.log 2>&1

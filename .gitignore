@@ -1,0 +1,4 @@
+build/
+.vscode/
+model/*.log
+model/*.trt

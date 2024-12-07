@@ -1,0 +1,40 @@
+nms_plugin:
+  score_threshold: 0.3
+  iou_threshold: 0.5
+  max_output_boxes: 100
+  background_class: -1
+  score_activation: false
+  class_agnostic: false
+  box_coding: 1
+precess_plugin:
+  src_crop:
+  - 0
+  - 0
+  - 1280
+  - 720
+  dst_crop:
+  - 0
+  - 12
+  - 640
+  - 360
+  src_size:
+  - 720
+  - 1280
+  dst_size:
+  - 384
+  - 640
+  scale_inv:
+  - 2.0
+  - 2.0
+  mean:
+  - 0.0
+  - 0.0
+  - 0.0
+  norm_inv:
+  - 0.003921569
+  - 0.003921569
+  - 0.003921569
+  src_step:
+  - 1280
+  dst_step:
+  - 640
