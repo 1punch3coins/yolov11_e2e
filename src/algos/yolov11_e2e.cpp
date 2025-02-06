@@ -46,7 +46,11 @@ int32_t Yolov11E2e::Initialize(const std::string& model) {
     for (int32_t i = 0; i < kOutputTensorNum; i++) {
         p_meta->AddOutputTensorMeta(sOutputNameList[i], kOutputTypeList[i], iOutputNlcList[i]);
     }
+#if USE_ENQUEUEV3
+    trt_runner_.reset(TrtRunnerV3::Create());
+#else
     trt_runner_.reset(TrtRunner::Create());
+#endif
 
     // create model and set net meta values from engine
     if (trt_runner_->InitEngine(model)) {

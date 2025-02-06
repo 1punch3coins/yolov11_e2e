@@ -3,9 +3,14 @@
 #include <vector>
 #include <memory>
 #include <opencv2/opencv.hpp>
-#include "trt_runner.hpp"
 #include "img_precess_p.hpp"
 #include "det_structs.h"
+
+#if USE_ENQUEUEV3
+#include "trt_runner_v3.hpp"
+#else
+#include "trt_runner_v2.hpp"
+#endif
 
 using PreParam = nvinfer1::plugin::PreParam;
 using Crop = nvinfer1::plugin::Crop;
@@ -30,7 +35,11 @@ public:
     void Process(const std::vector<cv::Mat>& original_mat, Result& result);
     
 private:
+#if USE_ENQUEUEV3
+    std::unique_ptr<TrtRunnerV3> trt_runner_;
+#else
     std::unique_ptr<TrtRunner> trt_runner_;
+#endif
     std::vector<std::string> cls_names_;
     cudaStream_t stream_;
 
