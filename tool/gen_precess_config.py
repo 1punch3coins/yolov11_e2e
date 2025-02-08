@@ -1,5 +1,6 @@
 import argparse
 import yaml
+import os
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Export yolo11 model trained on coco.')
@@ -62,3 +63,4 @@ if __name__ == "__main__":
     plugin_config['precess_plugin']['dst_step'] = [dst_crop.w]
     with open(args.config, "w") as file:
         yaml.dump(plugin_config, file, sort_keys=False)
+    print("configs written to" +os.getcwd()+"/config/plugin_config.yml")

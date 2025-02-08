@@ -82,7 +82,7 @@ def insert_precess_plugin(self, inputs, outputs, attr_config):
     for out in outputs:
         out.inputs.clear()
 
-    # check at 
+    # check at https://github.com/1punch3coins/yolov11_e2e/blob/main/src/nvprocess/img_precess_p.cpp#L167
     op_attrs = dict()
     op_attrs["src_crop"] = np.array(attr_config["src_crop"], dtype=np.uint32)    # the static input img crop location(left, top) and size(w, h)
     op_attrs["dst_crop"] = np.array(attr_config["dst_crop"], dtype=np.uint32)    # the static modle mat crop location(left, top) and size(w, h)
@@ -184,9 +184,11 @@ if __name__ == '__main__':
             input_names=['input'],     # name of the input tensor
             output_names=['output'],   # name of the output tensor
         )
-    
+    print("nn part convertion completed")
+
     onnx_raw = onnx.load(onnx_file_path)
     onnx_simp, check = onnxsim.simplify(onnx_raw)
+    print("onnx model simplification completed")
     with open(args.config, "r") as file:
         attr_config = yaml.load(file, Loader=yaml.SafeLoader)
     assert(attr_config['precess_plugin']['src_size'][0] == args.input_h)
@@ -207,3 +209,5 @@ if __name__ == '__main__':
             onnx.save(onnx_final, onnx_file_path_prefix+".onnx")
     else:
         onnx.save(onnx_simp, onnx_file_path_prefix+".onnx")
+    print("plugin nodes insertion completed")
+    print("model saved to "+onnx_file_path_prefix+".onnx")
