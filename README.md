@@ -6,10 +6,10 @@ The project is a tensorrt-based, end-to-end implemntation of yolo11 in c++ envir
 - ✅ Dynamic batch size.
 - ✅ Fine-granularity logs to test performance.
 ## 📌 Table of Contents
-- [Environment](#environment)
-- [Usage](#usage)
-- [Build-your-own-model](#build-your-own-model)
-- [License](#license)
+- [Environment](#-environment)
+- [Usage](#-usage)
+- [Build-your-own-model](#-build-your-own-model)
+- [License](#-license)
 ## 📝 Environment
 The project has been tested under following enviroments.
 - ✅ Ubuntu18.04, gcc7.5, cuda11.4, tensorrt8.6.1
@@ -61,6 +61,8 @@ You should see some logs on the terminal like followings. And you might find the
 ## 🛠️ Build-Your-Own-Model
 ### 0. Motivation:
 There are two plugins attached to the nn part of yolo11 model, preprocessing input image and postprocessing nn model's output dens boxes respectively. The preprocess plugin is implmented with cuda kernels in src/nvprocess/img_precess_k.cu, while nms plugin is from tensorrt's official plugin libs.
+
+According to [here](https://docs.nvidia.com/deeplearning/tensorrt/10.8.0/architecture/capabilities.html#), tensorrt doesn't support uint8 data format to do internal computation, so the float/half conversion is explicitly done in a precedent cast node, instead in the preprocess plugin node.
 | ImgPrecessPlugin | EfficientNMS_TRT |
 |---------|---------|
 | ![Alt1](./assets/docs/Screenshot%20from%202025-02-06%2022-20-27.png) | ![Alt2](./assets/docs/Screenshot%20from%202025-02-06%2022-20-37.png) |
